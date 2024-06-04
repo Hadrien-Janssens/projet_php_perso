@@ -1,27 +1,25 @@
 <?php
-require_once dirname(__DIR__)."/constantes/constantes.php";
-    require_once __DIR__."/../core/gestionAuthentification.php";
-    require_once dirname(__DIR__)."/core/getInfoUser.php";
+require_once dirname(__DIR__,2)."/constantes/constantes.php";
+    require_once dirname(__DIR__,2)."/core/gestionAuthentification.php";
+    require_once dirname(__DIR__,2)."/core/getInfoUser.php";
     require_once dirname(__DIR__)."/models/userModel.php";
     require_once dirname(__DIR__)."/models/postModel.php";
-    require_once dirname(__DIR__)."/core/gestionFormulaire.php";
+    require_once dirname(__DIR__,2)."/core/gestionFormulaire.php";
+    require_once dirname(__DIR__,2)."/core/gestionVue.php";
 
 // gerer le cas ou l'utilisateur essaie detre sur cette page son avoir activer son compte
     
     if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['logout'])) {
         deconnecter_utilisateur();
-        header('Location:'. BASE_URL .'connexion.php');
+        header('Location:'. BASE_URL .'connexion');
         exit();
     }
 
-    if (est_connecte($_SESSION['utilisateur_id'])) {
-        $utilisateur = getInfoUser($_SESSION['utilisateur_id']);
-        $posts = getUserPosts($_SESSION['utilisateur_id']);
-    }
-    else {
+    if (!est_connecte($_SESSION['utilisateur_id'])) {
         header('Location:'. BASE_URL .'connexion.php');
         exit();
     }
+  
 
 // modifier son avatar-----------------------------------------
     if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['img-form'])) {
@@ -86,3 +84,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST) && isset($_POST["disl
     exit;
 }
         
+
+// tentative MVC
+
+function obtenir_pageInfos(): array
+{
+    return [
+        'vue' => 'profil',
+        'titre' => "Page de profil",
+        'description' => "Description de la page de profil..."
+    ];
+}
+
+function index () {
+    // $utilisateur = getInfoUser($_SESSION['utilisateur_id']);
+    // $posts = getUserPosts($_SESSION['utilisateur_id']);
+    $args['utilisateur']= getInfoUser($_SESSION['utilisateur_id']);
+    $args['posts'] = getUserPosts($_SESSION['utilisateur_id']);
+  afficher_vue(obtenir_pageInfos(),'index',$args);
+}

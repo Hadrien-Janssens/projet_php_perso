@@ -25,8 +25,8 @@ if (isset($_SESSION['utilisateur_id']) && est_connecte($_SESSION['utilisateur_id
 function classSuivantLeChemin () {
     $pages = [
         BASE_URL => '<i class="fa-solid fa-house"></i>',
-        BASE_URL.'contact.php' => '<i class="fa-solid fa-file-signature"></i>',
-        BASE_URL.'profil.php'=> '<i class="fa-solid fa-user"></i>'
+        BASE_URL.'contact' => '<i class="fa-solid fa-file-signature"></i>',
+        BASE_URL.'profil'=> '<i class="fa-solid fa-user"></i>'
     ];
     foreach ($pages as $page => $label) {
         $class = ($_SERVER['REQUEST_URI'] ==  $page) ? 'active' : '';

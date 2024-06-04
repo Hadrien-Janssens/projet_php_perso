@@ -1,11 +1,3 @@
-<?php
-$metaDescription = "profil";
-$pageTitre = "profil";
-require_once __DIR__."/header.php";
-require_once __DIR__."/controllers/profilController.php";
-require_once __DIR__."/models/postModel.php";
-
-?>
 <div class="flex items-center justify-between m-6">
     <div>
         <h1 class=" text-4xl font-extrabold  ">Profile </h1>
@@ -32,7 +24,7 @@ require_once __DIR__."/models/postModel.php";
     <div id="profil-container" class="grow m-5 sm:m-0">
         <div class="bg-slate-100 p-2 rounded grow  ">
             <div class="flex flex-col items-center gap-3 ">
-                <figure><img src="<?php echo BASE_URL.$utilisateur['img_profil'] ?>" alt=""
+                <figure><img src="<?php echo BASE_URL."/public/".$utilisateur['img_profil'] ?>" alt=""
                         class="object-cover h-[100px]  sm:h-[200px] w-[100px] sm:w-[200px] rounded-full  relative translate-y-[-25%] border-4 border-blue-500 ">
                 </figure>
                 <div>
@@ -43,8 +35,8 @@ require_once __DIR__."/models/postModel.php";
         <!-- post ecrit par lui -->
         <div class="flex flex-col items-center gap-3 w-full ">
             <?php
-                       for ($i=count($posts)-1; $i >= 0 ; $i--) { 
-                        $post = $posts[$i];
+                       for ($i=count($args['posts'])-1; $i >= 0 ; $i--) { 
+                        $post = $args['posts'][$i];
                       $like = getNumberLike($post['id']);
                            // gestion du coeur couleur 
             $isLiked = postIsLikedByConnectedUser($utilisateur['UseId'], $post['id']);
@@ -55,7 +47,7 @@ require_once __DIR__."/models/postModel.php";
                         echo "<div class=' m-3 bg-white rounded-lg shadow w-full'>
                         <div class='flex justify-between border-b p-2 text-gray-500' >
                         <div class='flex gap-4'>
-                            <img src='".BASE_URL.$utilisateur['img_profil']."' width='50px'  class='rounded-[100%] border-2 border-blue-500 h-[50px] object-cover'/>
+                            <img src='".BASE_URL."/public/".$utilisateur['img_profil']."' width='50px'  class='rounded-[100%] border-2 border-blue-500 h-[50px] object-cover'/>
                             <div class='font-black text-black'>".$utilisateur['UsePseudo']."</div>
                         </div>
                             <div>
