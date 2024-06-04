@@ -1,8 +1,11 @@
 <?php
-$metaDescription = "ici vous trouverez la page d'acceuil de mon site";
-$pageTitre = "accueil";
-require_once "./header.php";
+require_once __DIR__."/core/router.php";
+
+$routes = [
+    obtenir_route('GET','/','accueilController','index'),
+    obtenir_route('GET','/connection','connectionController','index'),
+    obtenir_route('POST','/connection','connectionController','connection')
+];
+
+demarrer_routeur($routes);
 ?>
-<div class="container">
-    <h1>Accueil</h1>
-</div>

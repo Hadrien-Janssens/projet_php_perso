@@ -4,9 +4,11 @@ $pageTitre = "inscription";
 require_once "./header.php";
 require_once "./controllers/inscriptionController.php";
 ?>
-<div class="container">
-    <h1 class="text-xl text-center my-10">Inscription</h1>
+<div class="mx-5">
+    <h1 class="text-4xl text-center my-10">Inscription</h1>
+    <p class="relative text-center translate-y-[-20px]">C'est facile et rapide</p>
     <form action="" method="POST" class="flex flex-col max-w-96 m-auto">
+
         <input type="hidden" name="formName" value="formInscription">
         <input type="text" id="pseudo" name="pseudo" required minlength="2" maxlength="255" placeholder="Pseudo"
             class="p-1 bg-gray-100 rounded mb-2 shadow shadow-xs"

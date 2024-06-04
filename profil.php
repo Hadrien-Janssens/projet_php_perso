@@ -3,20 +3,161 @@ $metaDescription = "profil";
 $pageTitre = "profil";
 require_once __DIR__."/header.php";
 require_once __DIR__."/controllers/profilController.php";
+require_once __DIR__."/models/postModel.php";
+
 ?>
-<div class="p-5 ">
-    <h1 class=" text-xl mb-3 ">Profil</h1>
-    <div class="bg-slate-200 p-2 rounded max-w-96 ">
-        <p>nom : <?= $utilisateur['UsePseudo']??'...'?> </p>
-        <p>email : <?=$utilisateur['UseEmail'] ?? '...'?></p>
+<div class="flex items-center justify-between m-6">
+    <div>
+        <h1 class=" text-4xl font-extrabold  ">Profile </h1>
     </div>
-
-
-    <form action="" method="POST" class="max-w-96 flex justify-end">
-        <input type="submit" value='Déconnecter'
-            class="rounded bg-red-400 text-white px-2 py-1 mt-3 hover:cursor-pointer ">
-
-    </form>
+    <div>
+        <button class="sm:hidden" id="gear"><i class="fa-solid fa-gear text-xl"></i></button>
+    </div>
 </div>
+<div class="py-5 sm:px-5  flex gap-5 items-start max-w-[1000px] m-auto ">
+    <div id="div-menu-secondary" class=" p-3 bg-slate-100 basis-[20%] shrink rounded  hidden sm:block">
+        <button id="close-menu" class="absolute sm:hidden right-2"><i class="fa-solid fa-xmark"></i></button>
+        <h2 class="text-xl font-medium">Paramètre</h2>
+        <!-- nav secondaire  -->
+        <ul id="menu-secondary">
 
+            <li id="profil" class=" hover:bg-white hover:cursor-pointer rounded-md text-blue-500 px-2 duration-100">
+                Profile
+            </li>
+            <li id="post" class=" hover:bg-white hover:cursor-pointer rounded-md px-2 duration-100">Historique</li>
+            <li id="compte" class=" hover:bg-white hover:cursor-pointer rounded-md px-2 duration-100">Compte</li>
+        </ul>
+    </div>
+    <!-- container profile  -->
+    <div id="profil-container" class="grow m-5 sm:m-0">
+        <div class="bg-slate-100 p-2 rounded grow  ">
+            <div class="flex flex-col items-center gap-3 ">
+                <figure><img src="<?php echo BASE_URL.$utilisateur['img_profil'] ?>" alt=""
+                        class="object-cover h-[100px]  sm:h-[200px] w-[100px] sm:w-[200px] rounded-full  relative translate-y-[-25%] border-4 border-blue-500 ">
+                </figure>
+                <div>
+                    <p class="text-4xl text-left font-bold"><?= $utilisateur['UsePseudo'] ?></p>
+                </div>
+            </div>
+        </div>
+        <!-- post ecrit par lui -->
+        <div class="flex flex-col items-center gap-3 w-full ">
+            <?php
+                       for ($i=count($posts)-1; $i >= 0 ; $i--) { 
+                        $post = $posts[$i];
+                      $like = getNumberLike($post['id']);
+                           // gestion du coeur couleur 
+            $isLiked = postIsLikedByConnectedUser($utilisateur['UseId'], $post['id']);
+            //date 
+            $date = new DateTime($post['created_at']);
+            $date = $date->format('d/m/y');
+
+                        echo "<div class=' m-3 bg-white rounded-lg shadow w-full'>
+                        <div class='flex justify-between border-b p-2 text-gray-500' >
+                        <div class='flex gap-4'>
+                            <img src='".BASE_URL.$utilisateur['img_profil']."' width='50px'  class='rounded-[100%] border-2 border-blue-500 h-[50px] object-cover'/>
+                            <div class='font-black text-black'>".$utilisateur['UsePseudo']."</div>
+                        </div>
+                            <div>
+                                <div class='flex justify-end gap-2'>
+                                    <div><i class='fa-solid fa-ellipsis'></i></div>
+                                    <div><i class='fa-solid fa-xmark'></i></div>
+                                </div>
+                                <div class='italic'>
+                                    publié le :".$date."
+                                </div>
+                            </div>
+                        </div>
+                        <div class='my-5 p-2'>
+                             ".$post['comment']."
+                        </div>
+                        <div class=' flex justify-between gap-3 p-2'>
+                            <form method='post'>
+                            <input type='hidden' name='".($isLiked ?"dislike" :"like")."' value='".$post['id']."'  />
+                                <button class='flex items-center hover:bg-slate-100 duration-200 px-10 py-1 rounded-sm'>".$like."
+                                <i class='".($isLiked ?"fa-solid fa-heart text-red-500 ":"fa-regular fa-heart " )."pl-1'></i><p class='hidden md:block ml-2'>J'aime</p>
+                                </button> 
+                                </button> 
+                            </form>
+                
+                            <button class='flex items-center hover:bg-slate-100 duration-200 px-10 py-1 rounded-sm'><i class='fa-regular fa-comments'></i><p class='ml-2 hidden md:block'>Commenter</p>
+                            </button>
+                
+                        </div>
+                    </div>";
+                    }
+                ?>
+        </div>
+    </div>
+    <!-- container de posts  -->
+    <div class="bg-slate-100 p-2 rounded grow hidden" id="post-container">
+        <h3 class="text-xl font-medium">Mes posts</h3>
+        <div class="flex flex-col items-center gap-3 ">
+            <div class="flex justify-between w-96 border p-2 rounded">
+                <div>voici un post</div>
+            </div>
+        </div>
+    </div>
+    <!-- container compte  -->
+    <div class="bg-slate-100 p-2 rounded grow hidden max-w-100%" id="compte-container">
+        <h3 class="text-xl font-medium">Compte</h3>
+        <div class="flex flex-col items-center gap-3 ">
+            <!-- /formulaire name -->
+            <div class="flex flex-col w-full border p-2 rounded">
+                <div class="flex justify-between">
+                    <div> <?= $utilisateur['UsePseudo']?></div>
+                    <label id="btn-name" for="name"
+                        class="border border-green-600 bg-green-600 rounded px-3 py-1 text-white hover:cursor-pointer">modifier</label>
+                </div>
+                <form action="" method="post" id="name-form" class="h-0 overflow-hidden">
+                    <div class="flex justify-between items-center my-1">
+                        <input type="hidden" name="name-form">
+                        <input type="text" placeholder="nouveau nom" class="" id="name" name="name">
+                        <button class="text-white bg-blue-500  rounded px-3 py-1">confirmer</button>
+                    </div>
+                </form>
+            </div>
+            <!-- ---------------------- -->
+
+            <div class="flex flex-col w-full border p-2 rounded">
+                <div class="flex justify-between">
+                    <div> <?= $utilisateur['UseEmail']?></div>
+                    <?= $erreur['email']?? '' ?>
+                    <label id="btn-mail" for="mail"
+                        class="border border-green-600 bg-green-600 rounded px-3 py-1 text-white hover:cursor-pointer">modifier</label>
+                </div>
+                <form action="" method="post" id="mail-form" class="h-0 overflow-hidden">
+                    <div class="flex justify-between items-center my-1">
+                        <input type="hidden" name="mail-form">
+                        <input type="text" placeholder="nouveau mail" class="" id="mail" name="email">
+                        <button class="text-white bg-blue-500  rounded px-3 py-1">confirmer</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- /formulaire photo profil -->
+            <div class="flex flex-col w-full border p-2 rounded">
+                <div class="flex justify-between">
+                    <div> <?= $utilisateur['img_profil']??'aucune'?></div>
+                    <label for="img_url"
+                        class="border border-green-600 bg-green-600 rounded px-3 py-1 text-white hover:cursor-pointer">modifier</label>
+                </div>
+                <form action="" method="post" id="img-form" class="h-0 overflow-hidden" enctype="multipart/form-data">
+                    <div class="flex justify-between items-center my-1">
+                        <input type="hidden" name="img-form">
+                        <input type="file" class="" id="img_url" name="img">
+                        <button class="text-white bg-blue-500  rounded px-3 py-1">confirmer</button>
+                    </div>
+                </form>
+            </div>
+            <!-- /fin formulaire photo profil -->
+            <button>Modifier le mot de passe</button>
+            <form action="" method="post">
+                <input type="hidden" name="delete-account">
+                <button class=" bg-red-500 rounded px-3 text-white">Supprimer mon compte</button>
+            </form>
+        </div>
+    </div>
+</div>
+<script src="./profil.js"></script>
 <?php require_once __DIR__."/footer.php";

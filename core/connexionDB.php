@@ -18,7 +18,8 @@
         try
         {
             // Instancier une nouvelle connexion.
-            $pdo = new PDO("mysql:host=$nomDuServeur;dbname=$nomDB", $nomUtilisateur,$motDePasse);
+            //charset permet d'encoder les smiley, si non la DB n'est paaaaas contente
+            $pdo = new PDO("mysql:host=$nomDuServeur;dbname=$nomDB;charset=utf8mb4", $nomUtilisateur,$motDePasse);
             // Définir le mode d'erreur sur "exception".
             $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             // Retourner l'objet PDO après la connexion.
