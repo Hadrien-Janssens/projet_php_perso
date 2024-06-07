@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__."/../core/gestionFormulaire.php";
+require_once dirname(__DIR__,2)."/core/gestionFormulaire.php";
 
 $reglesContact = [
     "name" => [

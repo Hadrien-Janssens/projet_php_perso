@@ -1,9 +1,3 @@
-<?php
-$metaDescription = "verification d'identité";
-$pageTitre = "verification d'identité";
-require_once __DIR__."/header.php";
-require_once __DIR__."/controllers/verificationIdentiteController.php";
-?>
 <h1 class="text-xl text-center my-10">verification d'identité</h1>
 
 <form action="" method="POST" class="flex flex-col max-w-64 m-auto mt-5">

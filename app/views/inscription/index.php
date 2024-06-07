@@ -1,9 +1,3 @@
-<?php
-$metaDescription = "ici vous trouverez la page d'inscription de mon site";
-$pageTitre = "inscription";
-require_once "./header.php";
-require_once "./controllers/inscriptionController.php";
-?>
 <div class="mx-5">
     <h1 class="text-4xl text-center my-10">Inscription</h1>
     <p class="relative text-center translate-y-[-20px]">C'est facile et rapide</p>

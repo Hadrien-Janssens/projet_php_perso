@@ -34,6 +34,6 @@ function est_connecte($id) {
     }
 }
 
-function deconnecter_utilisateur() {
-    session_destroy();
-}
+// function deconnecter_utilisateur() {
+//     session_destroy();
+// }

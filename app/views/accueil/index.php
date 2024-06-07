@@ -2,7 +2,7 @@
 <div class=" flex flex-col md:m-auto max-w-[700px]">
     <div class=" flex rounded-xl overflow-hidden p-5 grow ">
 
-        <form class=" flex flex-col gap-3 grow" method="post">
+        <form class=" flex flex-col gap-3 grow" method="post" action=<?= BASE_URL."publication"  ?>>
             <input type="hidden" name="post">
             <textarea class="block w-full rounded-2xl shadow p-2" rows="5" name="comment" id=""
                 placeholder="Comment vous-sentez vous ?"></textarea>
@@ -46,7 +46,7 @@
              ".$post['comment']."
         </div>
         <div class=' flex justify-between gap-3 p-2'>
-            <form method='post' >
+            <form method='post' action='".BASE_URL.($isLiked ?"dislike" :"like")."'>
                 <input type='hidden' name='".($isLiked ?"dislike" :"like")."' value='".$post['id']."'  />
                 <button class='flex items-center hover:bg-slate-100 duration-200 px-10 py-1 rounded-sm'>".$like."
                 <i class='".($isLiked ?"fa-solid fa-heart text-red-500 ":"fa-regular fa-heart " )."pl-1'></i><p class='hidden md:block ml-2'>J'aime</p>

@@ -10,32 +10,8 @@
             "unique" => true
         ],
 ];
-$reglesInscription = [
-    "pseudo" => [
-      "require" => true,
-      "max" => 255,
-      "min" => 2,
-      "unique"=> true
-    ],
-    "email" => [
-        "require" => true,
-        "max" => 255,
-        "min" => 2,
-        "unique" => true
-    ],
-    "password" => [
-        "require" => true,
-        "max" => 72,
-        "min" => 8
-    ],
-    "confirmation" => [
-      "require" => true,
-      "max" => 72,
-      "min" => 8
-    ]
-    ];
-
-    $reglesConnection = [
+function getReglesConnection( ){
+    return [
         "pseudo" => [
           "require" => true,
           "max" => 255,
@@ -48,6 +24,24 @@ $reglesInscription = [
             "min" => 8
         ]
     ];
+
+};
+
+function getReglesInscritpion(){
+    return [
+        "pseudo" => [
+          "require" => true,
+          "max" => 255,
+          "min" => 2,
+          "unique"=> true
+        ],
+        "password" => [
+            "require" => true,
+            "max" => 72,
+            "min" => 8
+        ]
+    ];
+}
 
 function createUser($pseudo,$email, $password ) {
     $motDePasseHashed = password_hash($password,PASSWORD_BCRYPT );

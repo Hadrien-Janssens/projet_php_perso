@@ -7,7 +7,7 @@ require_once dirname(__DIR__,2)."/constantes/constantes.php";
     require_once dirname(__DIR__,2)."/core/gestionFormulaire.php";
     require_once dirname(__DIR__,2)."/core/gestionVue.php";
 
-// gerer le cas ou l'utilisateur essaie detre sur cette page son avoir activer son compte
+// gerer le cas ou l'utilisateur essaie detre sur cette page son avoir activer son compte ou sans etre connecté
     
     if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['logout'])) {
         deconnecter_utilisateur();
@@ -16,7 +16,7 @@ require_once dirname(__DIR__,2)."/constantes/constantes.php";
     }
 
     if (!est_connecte($_SESSION['utilisateur_id'])) {
-        header('Location:'. BASE_URL .'connexion.php');
+        header('Location:'. BASE_URL .'connection');
         exit();
     }
   

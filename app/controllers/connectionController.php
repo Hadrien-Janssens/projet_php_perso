@@ -6,20 +6,9 @@ require_once dirname(__DIR__,2)."/core/getInfoUser.php";
 require_once dirname(__DIR__,2)."/core/gestionVue.php";
 require_once dirname(__DIR__)."/models/userModel.php";
 
+
 function connection() {
-    $reglesConnection = [
-        "pseudo" => [
-          "require" => true,
-          "max" => 255,
-          "min" => 2,
-          "unique"=> true
-        ],
-        "password" => [
-            "require" => true,
-            "max" => 72,
-            "min" => 8
-        ]
-    ];
+$reglesConnection = getReglesConnection();
     $dataArrayClean = xssSecurity($_POST);
     $erreurs  = traitement($reglesConnection,$dataArrayClean);
     if (empty($erreurs)) {
@@ -33,7 +22,6 @@ if (isset($_SESSION['utilisateur_id']) && est_connecte($_SESSION['utilisateur_id
     $args['utilisateur']= getInfoUser($_SESSION['utilisateur_id']);
     //si son compte est activé
     if ($utilisateur['UseActivated'] == 1 ) {
-        // header('Location:'.BASE_URL.'profil.php');
         header('Location:'.BASE_URL);
         exit();
     }
@@ -42,16 +30,19 @@ if (isset($_SESSION['utilisateur_id']) && est_connecte($_SESSION['utilisateur_id
         $verifierIdentite = [
             "UseId" => $utilisateur['UseId'],
             "UseEmail" => $utilisateur['UseEmail'],
-            "urlRedirection" => BASE_URL."profil.php",
+            "urlRedirection" => BASE_URL."profil",
             "envoyerCode" => true
         ];
         
 
         $_SESSION['verifierIdentite']= $verifierIdentite;
-        header('Location:'.BASE_URL.'verificationIdentite.php');
+        header('Location:'.BASE_URL.'verificationIdentite');
         exit();
     }
 }
+index () ;
+ 
+
 }
 // tentative mvc
 function obtenir_pageInfos(): array

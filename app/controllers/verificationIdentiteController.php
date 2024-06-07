@@ -1,18 +1,22 @@
 <?php
-require_once dirname(__DIR__)."/constantes/constantes.php";
-require_once dirname(__DIR__)."/core/gestionCodeActivation.php";
-require_once dirname(__DIR__)."/core/getInfoUser.php";
-require_once dirname(__DIR__)."/core/envoyerMail.php";
-require_once dirname(__DIR__)."/core/gestionAuthentification.php";
+require_once dirname(__DIR__,2)."/constantes/constantes.php";
+require_once dirname(__DIR__,2)."/core/gestionCodeActivation.php";
+require_once dirname(__DIR__,2)."/core/getInfoUser.php";
+require_once dirname(__DIR__,2)."/core/envoyerMail.php";
+require_once dirname(__DIR__,2)."/core/gestionAuthentification.php";
 require_once dirname(__DIR__)."/models/VerificationCodeModel.php";
-require_once dirname(__DIR__)."/core/gestionFormulaire.php";
+require_once dirname(__DIR__,2)."/core/gestionFormulaire.php";
+require_once dirname(__DIR__,2)."/core/gestionVue.php";
 
 //redirige vers l'accueil si pas autorisé
 if (!isset($_SESSION['verifierIdentite'])) {
-    header('Location:'.BASE_URL.'index.php');
+    header('Location:'.BASE_URL.'index');
         exit();
 } 
-// quand un code est envoyer avec le formulaire de verification
+
+function verification() {
+    $reglesVerificationCode = getRegleVerificationCode();
+ // quand un code est envoyer avec le formulaire de verification
 if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST)) {
     //traitement des données reçues par le formulaire de code
     if (isset($_POST['formVerificationIdentitie'])) {
@@ -28,7 +32,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST)) {
        unset($_SESSION['verifierIdentite']);
        //activer le compte
        activerCompte($verifierIdentite['UseId']);
-       header('Location:'.BASE_URL.'profil.php');
+       header('Location:'.BASE_URL.'profil');
        exit();
         }
     }
@@ -55,6 +59,19 @@ if ($_SESSION['verifierIdentite']['envoyerCode']) {
 
     $_SESSION['verifierIdentite']['envoyerCode']=false;
 }
+}
+//tentative mvc
 
+function obtenir_pageInfos(): array
+{
+    return [
+        'vue' => 'verificationIdentite',
+        'titre' => "Page d'verificationIdentite",
+        'description' => "Description de la page d'verificationIdentite..."
+    ];
+}
 
+function index () {
+  afficher_vue(obtenir_pageInfos(),'index');
+}
 ?>

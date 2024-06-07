@@ -151,5 +151,7 @@
         </div>
     </div>
 </div>
-<script src="./profil.js"></script>
-<?php require_once __DIR__."/footer.php";
+<script>
+<?php require_once __DIR__."/profil.js";?>
+</script>
+<?php require_once dirname(__DIR__)."/templates/footer.php";?>

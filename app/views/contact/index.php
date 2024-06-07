@@ -1,11 +1,3 @@
-<?php 
-$metaDescription = "voici la super description de la page Contact";
-$pageTitre = "contact";
-require_once "./header.php";
-require_once "./core/envoyerMail.php";
-require_once __DIR__."/controllers/contactController.php";
-?>
-
 <div class="container">
     <h1 class=" text-xl text-center my-10">Contact</h1>
     <form action="" method="POST" class="flex flex-col max-w-96 m-auto">

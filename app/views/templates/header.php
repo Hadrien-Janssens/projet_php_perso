@@ -58,7 +58,7 @@ function classSuivantLeChemin () {
             <?php 
 echo isset($utilisateur['UsePseudo']) 
     ? "Bonjour $utilisateur[UsePseudo], 👋" 
-    : '<a href="./index.php" class="p-2">Logo</a>';
+    : '<a href="./" class="p-2">Logo</a>';
 ?>
         </p>
         <ul class="flex">
@@ -68,20 +68,21 @@ echo isset($utilisateur['UsePseudo'])
             if ( isset($_SESSION['utilisateur_id']) && est_connecte($_SESSION['utilisateur_id'])) {
 
                 
-               echo '  <form action="'.BASE_URL.'/profil.php" method="POST" class="max-w-96 flex justify-end">
-               <input type="hidden" name="logout"/>
+               echo '  <form  method="POST"  class="max-w-96 flex justify-end">
+               <input type="hidden" name="_methode" value="logout"/>
                <button type="submit" class="px-2 text-gray-500 duration-200 hover:text-blue-600 " >
                    
                    <i class="fa-solid fa-arrow-right-from-bracket"></i>
                    </button>
        
-           </form>';
+           </form>
+           <a href="'.BASE_URL.'logout" >Logout </a>';
             }
             else {
                 echo ' 
                 <ul class="flex">
-                    <li class="py-1 px-2 rounded duration-200 hover:bg-slate-100 hover:cursor-pointer"><a href="./connexion.php ">connexion</a></li>
-                    <li class="py-1 px-2 rounded duration-200 hover:bg-slate-100 hover:cursor-pointer"><a href="./inscription.php ">inscription</a></li>
+                    <li class="py-1 px-2 rounded duration-200 hover:bg-slate-100 hover:cursor-pointer"><a href="./connection ">connection</a></li>
+                    <li class="py-1 px-2 rounded duration-200 hover:bg-slate-100 hover:cursor-pointer"><a href="./inscription ">inscription</a></li>
                 </ul> ';
             }
         ?>
