@@ -1,6 +1,17 @@
 <?php
     require_once dirname(__DIR__,2).'/core/connexionDB.php';
 
+    function reglePost() {
+        return [
+            'comment' => [
+                'require' => true,
+                'min' => 1,
+                'max' => 255
+            ]
+        ];
+    
+    }
+
 function createPost($userId,$comment, $img_url=null ) {
     try
     {

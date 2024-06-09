@@ -1,15 +1,15 @@
 <?php
 require_once __DIR__."/connexionDB.php";
 
-function connecterUtilisateur($pseudo, $password) {
+function connecterUtilisateur($email, $password) {
     //la fonction ne fait que creer un variable de session
     try
     {
         $pdo = connexionDB();
-        // rechercher les données de l'utilisateur en fonction du pseudo entré
-        $requete = "SELECT * FROM chris_Users WHERE UsePseudo = :pseudo";
+        // rechercher les données de l'utilisateur en fonction du email entré
+        $requete = "SELECT * FROM chris_Users WHERE UseEmail = :email";
         $stmt = $pdo->prepare($requete);
-        $stmt->bindParam(':pseudo', $pseudo, PDO::PARAM_STR);
+        $stmt->bindParam(':email', $email, PDO::PARAM_STR);
         $stmt->execute();
         //recupere toutes les données de l'utilisateur
         $utilisateur = $stmt->fetch(PDO::FETCH_ASSOC);

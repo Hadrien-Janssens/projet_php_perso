@@ -1,6 +1,6 @@
 <h1 class="text-xl text-center my-10">verification d'identité</h1>
 
-<form action="" method="POST" class="flex flex-col max-w-64 m-auto mt-5">
+<form action="<?=BASE_URL."/verificationIdentite" ?>" method="POST" class="flex flex-col max-w-64 m-auto mt-5">
     <input type="hidden" name="formVerificationIdentitie">
     <input type="text" name="verification_code" require maxlength="5" placeholder="Votre code à 5 chiffres .."
         minlength="5" id="verification_code" class="p-1 bg-gray-100 rounded mb-2 shadow shadow-xs">

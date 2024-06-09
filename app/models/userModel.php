@@ -12,7 +12,7 @@
 ];
 function getReglesConnection( ){
     return [
-        "pseudo" => [
+        "email" => [
           "require" => true,
           "max" => 255,
           "min" => 2,
@@ -32,10 +32,20 @@ function getReglesInscritpion(){
         "pseudo" => [
           "require" => true,
           "max" => 255,
-          "min" => 2,
-          "unique"=> true
+          "min" => 2
         ],
         "password" => [
+            "require" => true,
+            "max" => 72,
+            "min" => 8
+        ],
+        "email" => [
+            "require" => true,
+            "max" => 255,
+            "min" => 2,
+            "unique" => true
+        ],
+        "confirmation" => [
             "require" => true,
             "max" => 72,
             "min" => 8

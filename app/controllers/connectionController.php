@@ -10,12 +10,16 @@ require_once dirname(__DIR__)."/models/userModel.php";
 function connection() {
 $reglesConnection = getReglesConnection();
     $dataArrayClean = xssSecurity($_POST);
-    $erreurs  = traitement($reglesConnection,$dataArrayClean);
-    if (empty($erreurs)) {
-        connecterUtilisateur($dataArrayClean['pseudo'],$dataArrayClean['password']);
+    $args['erreur']  = traitement($reglesConnection,$dataArrayClean);
+    if (empty($args['erreur'])) {
+        connecterUtilisateur($dataArrayClean['email'],$dataArrayClean['password']);
+    }
+    else {
+    afficher_vue(obtenir_pageInfos(),'index',$args['erreur'] );
+return;
     }
     
-//rediriger l'utilisateur si il essaye de joindre la page connexion alors qu'il est déja connecté 
+//rediriger l'utilisateur 
 if (isset($_SESSION['utilisateur_id']) && est_connecte($_SESSION['utilisateur_id'])) {
     //recuperer les infos utilisateurs
     $utilisateur = getInfoUser($_SESSION['utilisateur_id']);
@@ -40,7 +44,8 @@ if (isset($_SESSION['utilisateur_id']) && est_connecte($_SESSION['utilisateur_id
         exit();
     }
 }
-index () ;
+afficher_vue(obtenir_pageInfos(),'index',);
+
  
 
 }

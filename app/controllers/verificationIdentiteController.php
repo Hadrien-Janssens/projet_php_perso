@@ -59,6 +59,7 @@ if ($_SESSION['verifierIdentite']['envoyerCode']) {
 
     $_SESSION['verifierIdentite']['envoyerCode']=false;
 }
+index();
 }
 //tentative mvc
 

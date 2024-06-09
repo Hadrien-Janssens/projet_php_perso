@@ -6,12 +6,16 @@
             <input type="hidden" name="post">
             <textarea class="block w-full rounded-2xl shadow p-2" rows="5" name="comment" id=""
                 placeholder="Comment vous-sentez vous ?"></textarea>
+            <?php if (isset($args['erreurs']['comment'])) {
+                  echo "<div class='text-red-500'>".$args['erreurs']['comment']."</div>";
+                } ?>
             <button class="border self-end border-blue-600 bg-blue-600 rounded px-3 text-white  ">Publier</button>
         </form>
     </div>
 
     <div id="posts" class="flex flex-col m-3 gap-3 ">
         <?php
+        //affichage des posts
         for ($i=count($args['posts'])-1; $i >= 0 ; $i--) { 
             $post = $args['posts'][$i];
             //nombre de like par post
@@ -29,8 +33,17 @@
     <div class=' m-3 bg-white rounded-lg shadow'>
         <div class='flex justify-between border-b p-2 text-gray-500' >
         <div class='flex gap-4'>
-            <img src='".BASE_URL."/public/".$user['img_profil']."' width='50px'  class='rounded-[100%] border-2 border-blue-500 h-[50px] object-cover'/>
-            <div class='font-black text-black'>".$user['UsePseudo']."</div>
+
+     
+        <form method='POST' action=".BASE_URL."profil>
+        <input type='hidden' name='id' value='".$user['UseId']."' />
+       <button> <img src='".BASE_URL."/public/".$user['img_profil']."' width='50px'  class='rounded-[100%] border-2 border-blue-500 h-[50px] object-cover'/> </button>
+        </form>
+
+        <form method='POST' action=".BASE_URL."profil>
+        <input type='hidden' name='id' value='".$user['UseId']."' />
+         <button class='font-black text-black'>".$user['UsePseudo']."</button>
+        </form>
         </div>
             <div>
                 <div class='flex justify-end gap-2'>
@@ -46,7 +59,7 @@
              ".$post['comment']."
         </div>
         <div class=' flex justify-between gap-3 p-2'>
-            <form method='post' action='".BASE_URL.($isLiked ?"dislike" :"like")."'>
+            <form method='post' action='".BASE_URL.($isLiked ?"dislike" :"like")."/".BASE_URL."'>
                 <input type='hidden' name='".($isLiked ?"dislike" :"like")."' value='".$post['id']."'  />
                 <button class='flex items-center hover:bg-slate-100 duration-200 px-10 py-1 rounded-sm'>".$like."
                 <i class='".($isLiked ?"fa-solid fa-heart text-red-500 ":"fa-regular fa-heart " )."pl-1'></i><p class='hidden md:block ml-2'>J'aime</p>

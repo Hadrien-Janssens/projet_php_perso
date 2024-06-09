@@ -68,15 +68,8 @@ echo isset($utilisateur['UsePseudo'])
             if ( isset($_SESSION['utilisateur_id']) && est_connecte($_SESSION['utilisateur_id'])) {
 
                 
-               echo '  <form  method="POST"  class="max-w-96 flex justify-end">
-               <input type="hidden" name="_methode" value="logout"/>
-               <button type="submit" class="px-2 text-gray-500 duration-200 hover:text-blue-600 " >
-                   
-                   <i class="fa-solid fa-arrow-right-from-bracket"></i>
-                   </button>
-       
-           </form>
-           <a href="'.BASE_URL.'logout" >Logout </a>';
+               echo '  
+           <a href="'.BASE_URL.'logout" class="px-2 text-gray-500 duration-200 hover:text-blue-600 " > <i class="fa-solid fa-arrow-right-from-bracket"></i> </a>';
             }
             else {
                 echo ' 

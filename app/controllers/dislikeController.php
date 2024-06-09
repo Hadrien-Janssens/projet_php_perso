@@ -5,7 +5,7 @@ require_once dirname(__DIR__,2)."/core/gestionFormulaire.php";
 require_once dirname(__DIR__)."/models/postModel.php";
 
 
-function dislike() {
+function dislike($chemin) {
 
     $utilisateur = getInfoUser($_SESSION['utilisateur_id']);
   
@@ -13,7 +13,7 @@ function dislike() {
         dislikePost($utilisateur['UseId'],$_POST['dislike']);
           // Rediriger l'utilisateur vers la même page pour éviter la resoumission du formulaire
     
-        header("Location: " . BASE_URL);
-        exit;
+          header("Location: /" . $chemin  );
+          exit();
     
 }
