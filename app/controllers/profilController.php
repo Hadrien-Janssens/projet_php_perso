@@ -15,7 +15,7 @@
     //     exit();
     // }
 
-    if (!est_connecte($_SESSION['utilisateur_id'])) {
+    if (!isset(($_SESSION['utilisateur_id'])) || !est_connecte($_SESSION['utilisateur_id'])) {
         header('Location:'. BASE_URL .'connection');
         exit();
     }
